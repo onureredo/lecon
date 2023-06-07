@@ -10,15 +10,16 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://lecon.vercel.app'
-        : process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin:
+//       process.env.NODE_ENV === 'production'
+//         ? process.env.CLIENT_URL
+//         : process.env.FRONTEND_URL,
+//     credentials: true,
+//   })
+// );
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', authRouter);

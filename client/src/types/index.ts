@@ -29,10 +29,10 @@ export interface AuthContextData {
   user: User | null;
   isLoading: boolean;
   error: APIError | null;
-  // Function to log in a user
   login: (email: string, password: string) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 export interface AuthProviderProps {

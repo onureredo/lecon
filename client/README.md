@@ -1,51 +1,51 @@
-# Frontend Roadmap for Social Media Application
+# Social Media Application - Frontend Development Overview
 
-This roadmap outlines the main development stages and focal points of a social media application. We'll be using Next.js, TypeScript, and TailwindCSS as our main technologies.
+## Stack
 
-## 1. Project Setup
+- **Next.js**: Framework for server-side rendered React applications.
+- **TypeScript**: Superset of JavaScript providing static typing, enhancing developer productivity.
+- **TailwindCSS**: Utility-first CSS framework for rapid UI development.
 
-- Initialize a new Next.js project with TypeScript and TailwindCSS, a modern utility-first CSS framework that will allow us to design the UI with ease.
-- Configure the necessary environment variables. These will include API endpoints, authentication tokens, and more.
-- Install all necessary dependencies and set up linting and formatting tools such as ESLint and Prettier to maintain a clean and consistent codebase.
+## Roadmap
 
-## 2. Types and Contexts
+### Project Initialization
+
+1. **Create a New Next.js & TypeScript Project**: Initialize a new Next.js project configured with TypeScript. Use the `create-next-app` utility with the `--example with-typescript` option.
+2. **Set Up TailwindCSS**: Install TailwindCSS and its dependencies and configure it to work with Next.js and PostCSS.
+
+### Mobile-First Design and Development
+
+3. **Plan the Layout**: Plan the design and layout of your application with a mobile-first approach. Start designing for smaller screens and then expand for larger ones.
+4. **Implement Responsive Design**: Implement the responsive design using TailwindCSS classes. Remember to check the design on multiple screen sizes to ensure it works as expected.
+
+### State Management and Cookies
+
+5. **Create Authentication Context**: Use React's Context API to create a context for managing authentication.
+6. **Manage Authentication State**: Store the authentication state (i.e., whether the user is logged in and their details) in your Authentication Context.
+7. **Use Cookies**: To persist the authentication state across sessions, store the JWT token in HTTP-only cookies. This provides an added layer of security as HTTP-only cookies are not accessible via JavaScript, reducing the risk of XSS attacks.
+
+## Types and Contexts
 
 - Define clear and reusable TypeScript interfaces or types for models (User, Post, etc.) inside a dedicated `types` directory. This will ensure that we have a standardized way of referring to these entities throughout the application.
 - Use React Context for global state management. This will primarily involve states related to user authentication and user data.
 
-## 3. Component Development
+### Routing
 
-- Begin component development with a mobile-first approach. This methodology is effective for creating responsive designs.
-- Craft reusable components that will form the building blocks of the pages. These components may include UI elements like Buttons, Input Fields, Cards, and more.
+8. **Implement Pages**: Next.js uses file-system-based routing. Implement your pages under the `pages/` directory. Dynamic routes can be handled using square bracket (`[]`) notation.
 
-## 4. Page Development
+### Custom Hooks and Reusable Components
 
-- Develop key pages for the application. This will likely include a Home Page, Profile Page, Post Detail Page, and more.
-- Where appropriate, take advantage of Next.js's built-in features for server-side rendering or static generation to improve page load times and overall SEO.
+9. **Design Component Hierarchy**: Define a clear component hierarchy to manage UI components better.
+10. **Create Custom Hooks**: Implement custom hooks for likes, reposts, and replies to encapsulate the business logic of these actions.
+11. **Develop Reusable Components**: Create reusable components such as buttons, cards, forms, etc., to maintain UI consistency and simplify development.
 
-## 5. Features Implementation
+### Testing and Deployment
 
-- Implement the authentication flow. This includes creating UIs and functionalities for signing up, signing in, and logging out.
-- Work on post-related features. Users should be able to create, read, update, and delete posts.
-- Implement social interaction features. These include liking, replying to, and reposting posts.
-- Implement user following features. Users should be able to follow and unfollow each other.
-- Implement support for mentions and hashtags in posts. This can be achieved using suitable libraries such as `react-mentions` and `react-linkify`.
+12. **Component Testing**: Write tests for your components using Jest and React Testing Library to ensure they work as expected.
+13. **End-to-End Testing**: Write end-to-end tests using Cypress to simulate user interactions and test the flow of your application.
+14. **Deployment**: Finally, deploy your application using a platform like Vercel, which has built-in support for Next.js applications.
 
-## 6. Error Handling and Accessibility
-
-- Develop a robust error handling mechanism to improve user experience.
-- Keep accessibility in mind when designing and developing the application. This includes the proper use of ARIA attributes, ensuring good color contrast, adding descriptive alt text for images, and more.
-
-## 7. Code Consistency and Organization
-
-- Strive for consistency in casing, indentation style, and file naming throughout the project.
-- Organize files and folders in a logical, maintainable way to make it easier for others to understand the project structure.
-
-## 8. Documentation
-
-- Comment code where necessary to provide context and clarity.
-
-This roadmap provides a high-level overview of the development process. Each step encompasses significant work and may involve numerous subtasks. It's important to break down each step into smaller tasks as you progress to make the development process more manageable.
+This roadmap offers a detailed view of the frontend development process. It's important to follow best practices for Next.js and TypeScript development, ensuring the code is clean, efficient, and maintainable.
 
 ## Getting Started
 

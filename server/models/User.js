@@ -23,6 +23,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       validate: {
         validator: function (v) {
           return /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
@@ -55,6 +56,11 @@ const userSchema = new Schema(
       enum: ['user', 'moderator', 'admin', 'super'],
       default: 'user',
       select: false,
+    },
+    theme: {
+      type: String,
+      enum: ['light', 'dark'],
+      default: 'light',
     },
     isVerified: {
       type: Boolean,

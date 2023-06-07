@@ -32,7 +32,7 @@ export interface AuthContextData {
   login: (email: string, password: string) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
-  refreshUser: () => Promise<void>;
+  fetchUser: () => Promise<void>;
 }
 
 export interface AuthProviderProps {

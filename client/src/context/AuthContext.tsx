@@ -11,10 +11,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [error, setError] = useState<any>(null);
 
   // Function to fetch the current user's data
-  const refreshUser = async () => {
+  const fetchUser = async () => {
+    const token = Cookies.get('token');
+    if (!token) {
+      // No token, so user is not logged in
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     try {
-      const token = Cookies.get('token');
       const response = await axios.get(
         'https://lecon-app.onrender.com/auth/me',
         { headers: { Authorization: `Bearer ${token}` } }
@@ -28,12 +33,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Call the /auth/login endpoint with the provided username and password
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
         'https://lecon-app.onrender.com/auth/login',
-        { username, password }
+        { email, password }
       );
       setUser(response.data.user);
       Cookies.set('token', response.data.token);
@@ -71,7 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Use an effect to fetch the current user data whenever the component is mounted
   useEffect(() => {
-    refreshUser();
+    fetchUser();
   }, []);
 
   return (
@@ -83,7 +88,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         login,
         register,
         logout,
-        refreshUser,
+        fetchUser,
       }}
     >
       {children}

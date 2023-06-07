@@ -1,7 +1,43 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
-const TestComponent: React.FC = () => {
+export const LoginComponent: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const auth = useAuth();
+
+  const handleLogin = () => {
+    auth.login(email, password);
+  };
+
+  const handleLogout = () => {
+    auth.logout();
+  };
+  return (
+    <div>
+      <input
+        type='text'
+        placeholder='Email'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type='password'
+        placeholder='Password'
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <div className=' bg-white'>
+        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogout} className='ml-6'>
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export const RegisterComponent: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -10,22 +46,11 @@ const TestComponent: React.FC = () => {
   const auth = useAuth();
 
   const handleRegister = () => {
-    // Call the register function with the current form values
     auth.register({ firstName, lastName, username, email, password });
   };
 
-  const handleLogin = () => {
-    // Call the login function with the current form values
-    auth.login(email, password);
-  };
-
-  const handleLogout = () => {
-    // Call the logout function
-    auth.logout();
-  };
-
   return (
-    <div>
+    <div className='mt-10'>
       <input
         type='text'
         placeholder='First Name'
@@ -56,11 +81,9 @@ const TestComponent: React.FC = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleRegister}>Register</button>
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleRegister} className='bg-white'>
+        Register
+      </button>
     </div>
   );
 };
-
-export default TestComponent;

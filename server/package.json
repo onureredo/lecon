@@ -5,12 +5,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node -r dotenv/config --watch server.js",
-    "start": "node -r dotenv/config server.js",
-    "devGo": "nodemon -r dotenv/config server.js"
+    "dev": "cross-env NODE_ENV=development node -r dotenv/config --watch server.js",
+    "start": "cross-env NODE_ENV=production node -r dotenv/config server.js",
+    "devGo": "cross-env NODE_ENV=development nodemon -r dotenv/config server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
@@ -19,6 +20,7 @@
     "mongoose": "^7.2.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.22"
   }
 }

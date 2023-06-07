@@ -34,7 +34,11 @@ export const signUp = asyncHandler(async (req, res, next) => {
     bgImage,
   });
   const token = jwt.sign({ uid: newUser._id }, process.env.JWT_SECRET);
-  res.status(201).send({ token });
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  });
+  res.status(201).json({ token });
 });
 
 // Login
@@ -47,9 +51,18 @@ export const signIn = asyncHandler(async (req, res, next) => {
   if (!existingUser) throw new ErrorResponse('User does not exist.', 404);
   const matchPassword = await bcrypt.compare(password, existingUser.password);
   if (!matchPassword) throw new ErrorResponse('Password is incorrect', 401);
-
   const token = jwt.sign({ uid: existingUser._id }, process.env.JWT_SECRET);
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  });
   res.status(200).send({ token });
+});
+
+// Logout
+export const logOut = asyncHandler(async (req, res, next) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Logged out successfully.' });
 });
 
 // Get User

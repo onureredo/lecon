@@ -6,7 +6,16 @@ import User from '../models/User.js';
 
 // Register
 export const signUp = asyncHandler(async (req, res, next) => {
-  const { firstName, lastName, username, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    bio,
+    profileImage,
+    bgImage,
+  } = req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser)
     throw new ErrorResponse('An account with this Email already exists.');
@@ -17,6 +26,9 @@ export const signUp = asyncHandler(async (req, res, next) => {
     username,
     email,
     password: hash,
+    bio,
+    profileImage,
+    bgImage,
   });
   const token = jwt.sign({ uid: newUser._id }, process.env.JWT_SECRET);
   res.status(201).send({ token });

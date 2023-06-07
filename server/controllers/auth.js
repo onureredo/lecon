@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from '../utils/asynchHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 import User from '../models/User.js';
+import { signUpSchema, signInSchema } from '../joi/schemas.js';
 
 // Register
 export const signUp = asyncHandler(async (req, res, next) => {
@@ -16,6 +17,8 @@ export const signUp = asyncHandler(async (req, res, next) => {
     profileImage,
     bgImage,
   } = req.body;
+  const { error } = signUpSchema.validate(req.body);
+  if (error) throw new ErrorResponse(error.details[0].message, 400);
   const existingUser = await User.findOne({ email });
   if (existingUser)
     throw new ErrorResponse('An account with this Email already exists.');
@@ -36,6 +39,9 @@ export const signUp = asyncHandler(async (req, res, next) => {
 
 // Login
 export const signIn = asyncHandler(async (req, res, next) => {
+  const { error } = signInSchema.validate(req.body);
+  if (error) throw new ErrorResponse(error.details[0].message, 400);
+
   const { email, password } = req.body;
   const existingUser = await User.findOne({ email }).select('+password');
   if (!existingUser) throw new ErrorResponse('User does not exist.', 404);

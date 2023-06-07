@@ -1,7 +1,7 @@
 import Post from '../models/Post.js';
-import User from '../models/User.js';
 import asyncHandler from '../utils/asynchHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
+import { postSchema } from '../joi/schemas.js';
 
 export const getAllPosts = asyncHandler(async (req, res, next) => {
   const posts = await Post.find()
@@ -24,6 +24,9 @@ export const getSinglePost = asyncHandler(async (req, res, next) => {
 });
 
 export const createPost = asyncHandler(async (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+  if (error) throw new ErrorResponse(error.details[0].message, 400);
+
   const { body, uid } = req;
   const newPost = await (
     await Post.create({ ...body, author: uid })
@@ -32,6 +35,9 @@ export const createPost = asyncHandler(async (req, res, next) => {
 });
 
 export const updatePost = asyncHandler(async (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+  if (error) throw new ErrorResponse(error.details[0].message, 400);
+
   const {
     body,
     params: { id },

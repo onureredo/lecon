@@ -15,7 +15,7 @@ app.use(
     origin:
       process.env.NODE_ENV === 'production'
         ? 'https://lecon.vercel.app'
-        : 'http://localhost:3000',
+        : process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -25,7 +25,6 @@ app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/', userRouter);
 app.use(errorHandler);
-// app.use('*', (req, res) => res.sendStatus(419));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

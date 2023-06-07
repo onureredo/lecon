@@ -20,6 +20,7 @@ export interface AuthContextData {
   isLoading: boolean;
   error: any;
   login: (username: string, password: string) => Promise<void>;
+  register: (data: any) => Promise<void>;
   logout: () => void;
 }
 

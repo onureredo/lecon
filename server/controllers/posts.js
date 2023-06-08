@@ -5,8 +5,18 @@ import { postSchema } from '../joi/schemas.js';
 
 export const getAllPosts = asyncHandler(async (req, res, next) => {
   const posts = await Post.find()
+    .populate('comments', 'content  createdAt')
     .populate('author', 'username firstName lastName profileImage')
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        select:
+          'username firstName lastName profileImage bgImage bio createdAt',
+      },
+    });
+
   res.json(posts);
 });
 
@@ -14,10 +24,18 @@ export const getSinglePost = asyncHandler(async (req, res, next) => {
   const {
     params: { id },
   } = req;
-  const post = await Post.findById(id).populate(
-    'author',
-    'username firstName lastName profileImage'
-  );
+  const post = await Post.findById(id)
+    .populate('comments', 'content  createdAt')
+    .populate('author', 'username firstName lastName profileImage')
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        select:
+          'username firstName lastName profileImage bgImage bio createdAt',
+      },
+    });
+
   if (!post)
     throw new ErrorResponse(`Post with id of ${id} does not exist.`, 404);
   res.send(post);

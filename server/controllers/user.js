@@ -29,3 +29,56 @@ export const getUser = asyncHandler(async (req, res, next) => {
     posts,
   });
 });
+
+// FOLLOW & UNFOLLOW
+export const followUser = asyncHandler(async (req, res, next) => {
+  const userToFollow = await User.findById(req.params.id);
+  const currentUser = await User.findById(req.uid);
+
+  if (!userToFollow) {
+    throw new ErrorResponse(
+      `User with id of ${req.params.id} does not exist.`,
+      404
+    );
+  }
+
+  if (userToFollow.followers.includes(req.uid)) {
+    throw new ErrorResponse('You are already following this user', 400);
+  }
+
+  userToFollow.followers.push(req.uid);
+  currentUser.following.push(req.params.id);
+  await userToFollow.save();
+  await currentUser.save();
+
+  res
+    .status(200)
+    .json({ success: `Followed user with id of ${req.params.id}` });
+});
+
+export const unfollowUser = asyncHandler(async (req, res, next) => {
+  const userToUnfollow = await User.findById(req.params.id);
+  const currentUser = await User.findById(req.uid);
+
+  if (!userToUnfollow) {
+    throw new ErrorResponse(
+      `User with id of ${req.params.id} does not exist.`,
+      404
+    );
+  }
+
+  if (!userToUnfollow.followers.includes(req.uid)) {
+    throw new ErrorResponse('You are not following this user', 400);
+  }
+
+  const followerIndex = userToUnfollow.followers.indexOf(req.uid);
+  const followingIndex = currentUser.following.indexOf(req.params.id);
+  userToUnfollow.followers.splice(followerIndex, 1);
+  currentUser.following.splice(followingIndex, 1);
+  await userToUnfollow.save();
+  await currentUser.save();
+
+  res
+    .status(200)
+    .json({ success: `Unfollowed user with id of ${req.params.id}` });
+});

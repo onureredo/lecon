@@ -17,6 +17,17 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+export interface Post {
+  _id: string;
+  content: string;
+  likes: string[]; // assuming these are arrays of user IDs
+  reposts: string[]; // assuming these are arrays of user IDs
+  comments: string[]; // assuming these are arrays of comment IDs
+  hashtags: string[];
+  mentions: string[];
+  createdAt: string;
+  updatedAt: string;
+}
 export interface RegisterData {
   firstName: string;
   lastName: string;

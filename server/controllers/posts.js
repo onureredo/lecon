@@ -67,3 +67,40 @@ export const deletePost = asyncHandler(async (req, res, next) => {
   await Post.deleteOne({ _id: id });
   res.json({ success: `Post with id of ${id} was deleted` });
 });
+
+export const likePost = asyncHandler(async (req, res, next) => {
+  const {
+    params: { id },
+    uid,
+  } = req;
+  const post = await Post.findById(id);
+  if (!post) {
+    throw new ErrorResponse(`Post with id of ${id} does not exist.`, 404);
+  }
+  if (post.likes.includes(uid)) {
+    throw new ErrorResponse('You have already liked this post', 400);
+  }
+  post.likes.push(uid);
+  await post.save();
+  res.status(200).json({ success: `Liked post with id of ${id}` });
+});
+
+export const unlikePost = asyncHandler(async (req, res, next) => {
+  const {
+    params: { id },
+    uid,
+  } = req;
+  const post = await Post.findById(id);
+  if (!post) {
+    throw new ErrorResponse(`Post with id of ${id} does not exist.`, 404);
+  }
+  if (!post.likes.includes(uid)) {
+    throw new ErrorResponse('You have not liked this post', 400);
+  }
+  const index = post.likes.indexOf(uid);
+  if (index > -1) {
+    post.likes.splice(index, 1);
+  }
+  await post.save();
+  res.status(200).json({ success: `Unliked post with id of ${id}` });
+});

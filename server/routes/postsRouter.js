@@ -1,12 +1,14 @@
 import { Router } from 'express';
+import verifyToken from '../middlewares/verifyToken.js';
 import {
   getAllPosts,
   getSinglePost,
   createPost,
-  deletePost,
   updatePost,
+  deletePost,
+  likePost,
+  unlikePost,
 } from '../controllers/posts.js';
-import verifyToken from '../middlewares/verifyToken.js';
 
 const postsRouter = Router();
 
@@ -16,5 +18,7 @@ postsRouter
   .get(getSinglePost)
   .put(verifyToken, updatePost)
   .delete(verifyToken, deletePost);
+postsRouter.post('/:id/like', verifyToken, likePost);
+postsRouter.delete('/:id/unlike', verifyToken, unlikePost);
 
 export default postsRouter;

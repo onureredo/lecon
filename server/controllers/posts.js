@@ -13,7 +13,7 @@ export const getAllPosts = asyncHandler(async (req, res, next) => {
       populate: {
         path: 'author',
         select:
-          'username firstName lastName profileImage bgImage bio createdAt',
+          'username firstName lastName profileImage bgImage bio followers following likes isVerified createdAt',
       },
     });
 
@@ -32,7 +32,7 @@ export const getSinglePost = asyncHandler(async (req, res, next) => {
       populate: {
         path: 'author',
         select:
-          'username firstName lastName profileImage bgImage bio createdAt',
+          'username firstName lastName profileImage bgImage bio followers following likes isVerified createdAt -post',
       },
     });
 

@@ -4,9 +4,9 @@ import asyncHandler from '../utils/asynchHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 
 export const getAll = asyncHandler(async (req, res, next) => {
-  const users = await User.find().populate(
-    'firstName lastName username bio profileImage bgImage'
-  );
+  const users = await User.find()
+    .select('-email')
+    .populate('firstName lastName username bio profileImage bgImage');
 
   res.send(users);
 });

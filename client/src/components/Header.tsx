@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@/context/AuthContext';
-import Image from 'next/image';
 import { Login } from './Login';
+import Image from 'next/image';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
   faBars,

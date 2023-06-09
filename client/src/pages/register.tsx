@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Register: React.FC = () => {
-  const auth = useAuth();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
@@ -15,6 +15,8 @@ const Register: React.FC = () => {
   const [bgImage, setbgImage] = useState('');
   const [location, setLocation] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const auth = useAuth();
+  const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +34,9 @@ const Register: React.FC = () => {
       };
       await auth.register(userData);
       setSignupSuccess(true);
+      setTimeout(() => {
+        router.push('/login'); // Use the router's push method to redirect to the login page
+      }, 2000);
     } catch (error) {
       console.log('Registration error:', error);
     }

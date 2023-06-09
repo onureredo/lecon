@@ -6,10 +6,10 @@ export const signUpSchema = Joi.object({
   username: Joi.string().max(12).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
-  bio: Joi.string().optional(),
-  profileImage: Joi.string().optional(),
-  bgImage: Joi.string().optional(),
-  location: Joi.string().max(12).optional(),
+  bio: Joi.string().allow('', null),
+  profileImage: Joi.string().allow('', null),
+  bgImage: Joi.string().allow('', null),
+  location: Joi.string().max(12).allow('', null),
 });
 
 export const signInSchema = Joi.object({
@@ -18,8 +18,8 @@ export const signInSchema = Joi.object({
 });
 
 export const postSchema = Joi.object({
-  author: Joi.string().length(24).required(), // Mongoose object IDs are always 24 characters
+  author: Joi.string().length(24).required(),
   content: Joi.string().max(200).required(),
-  parentPost: Joi.string().length(24).optional(),
-  hashtags: Joi.array().items(Joi.string()).optional(),
+  parentPost: Joi.string().length(24).allow('', null),
+  hashtags: Joi.array().items(Joi.string()).optional().allow(null),
 });

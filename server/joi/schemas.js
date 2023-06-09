@@ -9,6 +9,7 @@ export const signUpSchema = Joi.object({
   bio: Joi.string().optional(),
   profileImage: Joi.string().optional(),
   bgImage: Joi.string().optional(),
+  location: Joi.string().max(12).optional(),
 });
 
 export const signInSchema = Joi.object({

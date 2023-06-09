@@ -54,7 +54,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await axios.post(`${apiURL}/auth/register`, data);
       setUser(response.data);
-      Cookies.set('token', response.data);
       setIsLoading(false);
     } catch (err) {
       setError(err);

@@ -13,7 +13,7 @@ export function useProfile(username: string) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${apiURL}/${username}`)
+      .get(`${apiURL}/users/${username}`)
       .then((response) => {
         setProfile(response.data.user);
         setPosts(response.data.posts);
@@ -25,5 +25,34 @@ export function useProfile(username: string) {
       });
   }, [username]);
 
-  return { loading, error, profile, posts };
+  const follow = async (userId: string) => {
+    try {
+      const response = await axios.post(`${apiURL}/users/${userId}/follow`);
+      setProfile((prevProfile) =>
+        prevProfile
+          ? { ...prevProfile, following: [...prevProfile.following, userId] }
+          : null
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const unfollow = async (userId: string) => {
+    try {
+      const response = await axios.post(`${apiURL}/users/${userId}/unfollow`);
+      setProfile((prevProfile) =>
+        prevProfile
+          ? {
+              ...prevProfile,
+              following: prevProfile.following.filter((id) => id !== userId),
+            }
+          : null
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { loading, error, profile, posts, follow, unfollow };
 }

@@ -20,9 +20,9 @@ export interface User {
 export interface Post {
   _id: string;
   content: string;
-  likes: string[]; // assuming these are arrays of user IDs
-  reposts: string[]; // assuming these are arrays of user IDs
-  comments: string[]; // assuming these are arrays of comment IDs
+  likes: string[];
+  reposts: string[];
+  comments: string[];
   hashtags: string[];
   mentions: string[];
   createdAt: string;

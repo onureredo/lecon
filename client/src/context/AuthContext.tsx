@@ -22,11 +22,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await axios.get(`${apiURL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(response.data.user);
+      setUser(response.data);
+      console.log(response.data);
       setIsLoading(false);
     } catch (err) {
       setError(err);
       setIsLoading(false);
+      throw err;
     }
   };
 
@@ -37,12 +39,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         password,
       });
-      setUser(response.data.user);
+      setUser(response.data);
       Cookies.set('token', response.data.token);
       setIsLoading(false);
     } catch (err) {
       setError(err);
       setIsLoading(false);
+      throw err;
     }
   };
 
@@ -50,12 +53,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(`${apiURL}/auth/register`, data);
-      setUser(response.data.user);
-      Cookies.set('token', response.data.token);
+      setUser(response.data);
+      Cookies.set('token', response.data);
       setIsLoading(false);
     } catch (err) {
       setError(err);
       setIsLoading(false);
+      throw err;
     }
   };
 
@@ -68,6 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
+    // console.log(user);
   }, []);
 
   return (

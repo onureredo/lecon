@@ -1,5 +1,9 @@
-// import React from 'react';
+// import { useAuth } from '@/context/AuthContext';
 
-// export const Header: React.FC = () => {
-//   return <></>;
+// export const Login: React.FC = () => {
+//   return (
+//     <>
+//       <div></div>
+//     </>
+//   );
 // };

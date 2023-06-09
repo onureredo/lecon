@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
+import { User, Post, APIError } from '../types';
 import axios from 'axios';
-import { User, Post } from '../types';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export function useProfile(username: string) {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<APIError | null>(null);
   const [profile, setProfile] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[] | null>(null);
 

@@ -6,9 +6,9 @@ export const signUpSchema = Joi.object({
   username: Joi.string().max(12).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
-  bio: Joi.string().allow('', null),
   profileImage: Joi.string().allow('', null),
   bgImage: Joi.string().allow('', null),
+  bio: Joi.string().allow('', null),
   location: Joi.string().max(12).allow('', null),
 });
 

@@ -36,9 +36,10 @@ const userSchema = new Schema(
       required: [true, 'Password is required'],
       select: false,
     },
-    bio: String,
     profileImage: String,
     bgImage: String,
+    bio: String,
+    location: String,
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -13,9 +13,10 @@ export const signUp = asyncHandler(async (req, res, next) => {
     username,
     email,
     password,
-    bio,
     profileImage,
     bgImage,
+    bio,
+    location,
   } = req.body;
   const { error } = signUpSchema.validate(req.body);
   if (error) throw new ErrorResponse(error.details[0].message, 400);
@@ -29,9 +30,10 @@ export const signUp = asyncHandler(async (req, res, next) => {
     username,
     email,
     password: hash,
-    bio,
     profileImage,
     bgImage,
+    bio,
+    location,
   });
   const token = jwt.sign({ uid: newUser._id }, process.env.JWT_SECRET);
   res.cookie('token', token, {

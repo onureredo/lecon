@@ -8,6 +8,7 @@ export interface User {
   username: string;
   email: string;
   bio: string;
+  location: string;
   profileImage: string;
   bgImage: string;
   following: Array<string>;

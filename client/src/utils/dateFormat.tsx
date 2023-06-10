@@ -20,7 +20,13 @@ export function formatTweetDate(date: string): string {
 }
 
 export function formatTitleDate(date: string): string {
-  const tweetDate = new Date(date);
-  const formattedTitleDate = format(tweetDate, 'hh:mm a · MMMM d yyyy');
+  const postDate = new Date(date);
+  const formattedTitleDate = format(postDate, 'hh:mm a · MMMM d yyyy');
   return formattedTitleDate;
+}
+
+export function formatSignupDate(date: string): string {
+  const signUpDate = new Date(date);
+  const formatSignupDate = format(signUpDate, ' MMM yyyy');
+  return formatSignupDate;
 }

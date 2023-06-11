@@ -100,14 +100,17 @@ export const likePost = asyncHandler(async (req, res, next) => {
   if (post.likes.includes(uid)) {
     throw new ErrorResponse('You have already liked this post', 400);
   }
-  post.likes.push(uid);
-  await post.save();
 
-  // Also add the post's ID to the User's likes array
+  post.likes.push(uid);
   user.likes.push(id);
   await user.save();
 
-  res.status(200).json({ success: `Liked post with id of ${id}` });
+  const likedPost = await Post.findById(id).populate(
+    'author',
+    'username firstName lastName profileImage'
+  );
+
+  res.status(200).json({ success: `Liked post with id of ${id}`, likedPost });
 });
 
 export const unlikePost = asyncHandler(async (req, res, next) => {
@@ -135,5 +138,12 @@ export const unlikePost = asyncHandler(async (req, res, next) => {
   }
   await user.save();
 
-  res.status(200).json({ success: `Unliked post with id of ${id}` });
+  const unlikedPost = await Post.findById(id).populate(
+    'author',
+    'username firstName lastName profileImage'
+  );
+
+  res
+    .status(200)
+    .json({ success: `Unliked post with id of ${id}`, unlikedPost });
 });

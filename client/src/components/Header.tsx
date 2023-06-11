@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className='sticky top-0 z-50 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-90 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
+      <header className='sticky top-0 z-50 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-80 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
         <div id='sidebar'>
           <button
             className='text-white focus:online-none z-50'

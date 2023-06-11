@@ -26,8 +26,11 @@ export const Footer: React.FC = () => {
   return (
     <>
       <footer>
-        <div id='mobile-button'>
-          <ul className='z-50 fixed bottom-0 left-0 right-0 bg-rouge bg-opacity-50 backdrop-blur-sm flex justify-around items-center py-4 mb-4 sm:hidden text-white border-t-2 rounded-t-md border-night-shade'>
+        <div
+          id='mobile-button'
+          className='fixed bottom-0 left-0 right-0 bg-rouge bg-opacity-80 backdrop-blur-sm sm:hidden text-white border-t-2 rounded-t-md border-night-shade'
+        >
+          <ul className='flex justify-around items-center py-4 mb-4 sm:hidden text-white border-t-2 rounded-t-md border-night-shade'>
             <li className='sm:hidden'>
               <Link href='/'>
                 <FontAwesomeIcon icon={faHome} size='xl' />

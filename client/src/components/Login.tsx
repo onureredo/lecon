@@ -33,7 +33,7 @@ export const Login: React.FC<LoginProps> = ({ handleClose }) => {
 
   return (
     <>
-      <div className='h-screen fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-zinc-950 bg-opacity-80 text-white'>
+      <div className='h-screen fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-zinc-950 bg-opacity-90 text-white'>
         <div className='border-2 border-gray-700 p-8 rounded-lg'>
           <div className='flex justify-between mb-4'>
             <Image

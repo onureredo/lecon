@@ -28,6 +28,7 @@ export interface Post {
   mentions: string[];
   createdAt: string;
   updatedAt: string;
+  author: User | null;
 }
 export interface RegisterData {
   firstName: string;

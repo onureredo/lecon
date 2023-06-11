@@ -1,10 +1,10 @@
 import { format } from 'date-fns';
 
-export function formatTweetDate(date: string): string {
-  const tweetDate = new Date(date);
+export function formatPostDate(date: string): string {
+  const postDate = new Date(date);
   const now = new Date();
   const diffInMinutes = Math.round(
-    (now.getTime() - tweetDate.getTime()) / (1000 * 60)
+    (now.getTime() - postDate.getTime()) / (1000 * 60)
   );
   const diffInHours = Math.round(diffInMinutes / 60);
 
@@ -15,7 +15,7 @@ export function formatTweetDate(date: string): string {
   } else if (diffInHours < 24) {
     return `${diffInHours}h`;
   } else {
-    return format(tweetDate, 'MMM d');
+    return format(postDate, 'MMM d');
   }
 }
 

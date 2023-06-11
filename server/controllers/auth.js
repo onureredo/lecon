@@ -69,6 +69,6 @@ export const logOut = asyncHandler(async (req, res, next) => {
 
 // Get User
 export const getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.uid);
+  const user = await User.findById(req.uid).populate('likes');
   res.json(user);
 });

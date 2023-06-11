@@ -1,4 +1,5 @@
 import Post from '../models/Post.js';
+import User from '../models/User.js';
 import asyncHandler from '../utils/asynchHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 import { postSchema } from '../joi/schemas.js';
@@ -92,6 +93,7 @@ export const likePost = asyncHandler(async (req, res, next) => {
     uid,
   } = req;
   const post = await Post.findById(id);
+  const user = await User.findById(uid);
   if (!post) {
     throw new ErrorResponse(`Post with id of ${id} does not exist.`, 404);
   }
@@ -100,6 +102,11 @@ export const likePost = asyncHandler(async (req, res, next) => {
   }
   post.likes.push(uid);
   await post.save();
+
+  // Also add the post's ID to the User's likes array
+  user.likes.push(id);
+  await user.save();
+
   res.status(200).json({ success: `Liked post with id of ${id}` });
 });
 
@@ -109,6 +116,7 @@ export const unlikePost = asyncHandler(async (req, res, next) => {
     uid,
   } = req;
   const post = await Post.findById(id);
+  const user = await User.findById(uid);
   if (!post) {
     throw new ErrorResponse(`Post with id of ${id} does not exist.`, 404);
   }
@@ -120,5 +128,12 @@ export const unlikePost = asyncHandler(async (req, res, next) => {
     post.likes.splice(index, 1);
   }
   await post.save();
+
+  const userLikesIndex = user.likes.indexOf(id);
+  if (userLikesIndex > -1) {
+    user.likes.splice(userLikesIndex, 1);
+  }
+  await user.save();
+
   res.status(200).json({ success: `Unliked post with id of ${id}` });
 });

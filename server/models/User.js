@@ -40,6 +40,7 @@ const userSchema = new Schema(
     bgImage: String,
     bio: String,
     location: String,
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,

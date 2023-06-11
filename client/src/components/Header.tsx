@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@/context/AuthContext';
-import { Login } from './Login';
 import Image from 'next/image';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
@@ -11,24 +11,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Header: React.FC = () => {
-  const [isLoginOpen, setLoginOpen] = useState(false);
   const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const openLogin = () => {
+    router.push('/login');
+  };
 
   const handleLogout = () => {
     logout();
   };
 
-  const openLoginDialog = () => {
-    setLoginOpen(true);
-  };
-
-  const closeLoginDialog = () => {
-    setLoginOpen(false);
-  };
-
   return (
     <>
-      <header className='sticky top-0 z-50 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-80 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
+      <header className='sticky top-0 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-80 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
         <div id='sidebar'>
           <button
             className='text-white focus:online-none z-50'
@@ -53,16 +49,9 @@ export const Header: React.FC = () => {
               <FontAwesomeIcon icon={faRightFromBracket} size='lg' />
             </button>
           ) : (
-            <button className='rounded-full' onClick={openLoginDialog}>
+            <button className='rounded-full' onClick={openLogin}>
               <FontAwesomeIcon icon={faRightToBracket} size='lg' />
             </button>
-          )}
-          {isLoginOpen && (
-            <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-              <div className='p-4 rounded-lg max-w-lg max-h-full overflow-hidden'>
-                <Login handleClose={closeLoginDialog} />
-              </div>
-            </div>
           )}
         </div>
       </header>

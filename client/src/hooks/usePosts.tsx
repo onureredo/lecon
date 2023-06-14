@@ -30,7 +30,9 @@ export function usePosts(user: User | null, isLoading: boolean) {
     };
 
     fetchPosts();
-    const intervalId = setInterval(fetchPosts, 5000);
+    const intervalId = user
+      ? setInterval(fetchPosts, 1000)
+      : setInterval(fetchPosts, 25000);
 
     return () => {
       clearInterval(intervalId);

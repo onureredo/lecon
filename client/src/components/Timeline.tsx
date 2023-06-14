@@ -38,10 +38,10 @@ export const Timeline: React.FC = () => {
     );
   }
   return (
-    <div className='flex justify-center items-center'>
-      <div className='sm:max-w-xl flex flex-col items-center overflow-hidden mb-20'>
+    <div className='flex justify-center items-center overflow-auto'>
+      <div className='sm:max-w-xl flex flex-col items-center overflow-auto mb-20 w-full'>
         <NewPost />
-        <div className='max-w-full'>
+        <div className='w-full overflow-auto'>
           {[...posts].map((post) => {
             const formattedDate = post.createdAt
               ? formatPostDate(post.createdAt)
@@ -53,9 +53,9 @@ export const Timeline: React.FC = () => {
             return (
               <div
                 key={post._id}
-                className='shadow w-full border border-gray-800'
+                className='shadow w-full border border-gray-800 overflow-hidden'
               >
-                <div className='flex items-start mx-4 my-5 cursor-default'>
+                <div className='flex items-start p-4 cursor-default'>
                   <div className='flex-shrink-0 mr-4'>
                     {post.author && post.author.profileImage ? (
                       <Image
@@ -110,12 +110,9 @@ export const Timeline: React.FC = () => {
                         </span>
                       </h2>
                     </div>
-                    <p
-                      className='text-white mt-2 white'
-                      style={{ wordBreak: 'break-word' }}
-                    >
-                      {post.content}
-                    </p>
+                    <div className='max-xs:w-72 overflow-auto'>
+                      <p className='text-white mt-2'>{post.content}</p>
+                    </div>
                     <div className='flex items-center mt-2 text-md space-x-6 sm:space-x-8'>
                       <div className='flex items-center cursor-pointer'>
                         <FontAwesomeIcon

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Login } from './Login';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -9,20 +8,12 @@ import {
   faBell,
   faEnvelope,
   faFeather,
-  faUser,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Footer: React.FC = () => {
   const { user } = useAuth();
-  const [isLoginOpen, setLoginOpen] = useState(false);
 
-  const openLoginDialog = () => {
-    setLoginOpen(true);
-  };
-
-  const closeLoginDialog = () => {
-    setLoginOpen(false);
-  };
   return (
     <>
       <footer>
@@ -38,23 +29,11 @@ export const Footer: React.FC = () => {
             </li>
             <li className='sm:hidden'>
               <Link href=''>
-                <FontAwesomeIcon icon={faUser} size='xl' />
+                <FontAwesomeIcon icon={faSearch} size='xl' />
               </Link>
             </li>
             <li className='sm:hidden'>
-              {user ? (
-                <FontAwesomeIcon
-                  icon={faFeather}
-                  size='xl'
-                  // onClick={handleOpenTweetPostModal}
-                />
-              ) : (
-                <FontAwesomeIcon
-                  icon={faFeather}
-                  size='xl'
-                  onClick={openLoginDialog}
-                />
-              )}
+              <FontAwesomeIcon icon={faFeather} size='xl' />
             </li>
             <li className='sm:hidden'>
               <Link href='/notifications'>

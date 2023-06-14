@@ -30,8 +30,6 @@ export const Timeline: React.FC = () => {
     }
   };
 
-  // useEffect(() => {}, [user]);
-
   if (isLoading) {
     return (
       <div className='w-full min-h-screen flex items-center justify-center'>

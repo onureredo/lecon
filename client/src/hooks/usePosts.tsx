@@ -13,19 +13,28 @@ export function usePosts(user: User | null, isLoading: boolean) {
   const token = Cookies.get('token');
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get<Post[]>(`${apiURL}/posts`, {
-        headers: { Authorization: `Bearer ${Cookies.get('token')}` },
-      })
-      .then((response) => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+    const fetchPosts = () => {
+      setLoading(true);
+      axios
+        .get<Post[]>(`${apiURL}/posts`, {
+          headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+        })
+        .then((response) => {
+          setPosts(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error);
+          setLoading(false);
+        });
+    };
+
+    fetchPosts();
+    const intervalId = setInterval(fetchPosts, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [user]);
 
   const createPost = async (content: string) => {

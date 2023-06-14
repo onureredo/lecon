@@ -63,8 +63,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setIsLoading(true);
-    setUser(null);
     Cookies.remove('token');
+    setUser(null);
     setIsLoading(false);
   };
 

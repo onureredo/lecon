@@ -17,7 +17,7 @@ import {
 
 export const Timeline: React.FC = () => {
   const { user, isLoading } = useAuth();
-  const { posts, likePost, unlikePost, updatePost } = usePosts(user, isLoading);
+  const { posts, likePost, unlikePost } = usePosts(user, isLoading);
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
@@ -29,6 +29,8 @@ export const Timeline: React.FC = () => {
       }
     }
   };
+
+  // useEffect(() => {}, [user]);
 
   if (isLoading) {
     return (

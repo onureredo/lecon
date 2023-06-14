@@ -13,22 +13,20 @@ export function usePosts(user: User | null, isLoading: boolean) {
   const token = Cookies.get('token');
 
   useEffect(() => {
-    if (!isLoading) {
-      setLoading(true);
-      axios
-        .get<Post[]>(`${apiURL}/posts`, {
-          headers: { Authorization: `Bearer ${Cookies.get('token')}` },
-        })
-        .then((response) => {
-          setPosts(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    }
-  }, [user, isLoading]);
+    setLoading(true);
+    axios
+      .get<Post[]>(`${apiURL}/posts`, {
+        headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+      })
+      .then((response) => {
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [user]);
 
   const likePost = async (postId: string) => {
     try {

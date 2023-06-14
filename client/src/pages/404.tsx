@@ -3,11 +3,14 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { faBackward, faPersonDigging } from '@fortawesome/free-solid-svg-icons';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const Custom404 = () => {
   return (
-    <>
-      <div className='flex flex-col items-center justify-center h-screen overflow-hidden'>
+    <div className='flex flex-col min-h-screen'>
+      <Header />
+      <div className='flex flex-col flex-grow items-center justify-center overflow-hidden'>
         <Image
           className='object-cover'
           src={'https://i.ibb.co/QCbrWH1/leconnn.png'}
@@ -33,7 +36,8 @@ const Custom404 = () => {
           </Link>
         </button>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

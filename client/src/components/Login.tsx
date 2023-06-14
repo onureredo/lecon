@@ -26,7 +26,7 @@ export const Login: React.FC<LoginProps> = ({ handleClose }) => {
       setRedirecting(true);
       setTimeout(() => {
         handleClose();
-      }, 1000);
+      }, 0);
     } catch (error) {
       setError('Failed to login');
     }

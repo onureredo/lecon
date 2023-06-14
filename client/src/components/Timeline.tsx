@@ -59,21 +59,21 @@ export const Timeline: React.FC = () => {
                   <div className='flex-shrink-0 mr-4'>
                     {post.author && post.author.profileImage ? (
                       <Image
-                        className='h-16 w-16 object-cover rounded-full'
+                        className='h-12 w-12 object-cover rounded-full'
                         src={post.author.profileImage}
                         alt='User Avatar'
                         draggable={false}
-                        height={64}
-                        width={64}
+                        height={48}
+                        width={48}
                       />
                     ) : (
                       <Image
-                        className='h-16 w-16 object-cover rounded-full'
+                        className='h-12 w-12 object-cover rounded-full'
                         src='https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg='
                         alt='Default User Avatar'
                         draggable={false}
-                        width={64}
-                        height={64}
+                        width={48}
+                        height={48}
                       />
                     )}
                   </div>

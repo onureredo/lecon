@@ -65,7 +65,7 @@ export const NewPost: React.FC = () => {
             #mycon
           </button>
         </div>
-        <div className='flex items-start m-6'>
+        <div className='flex items-start m-4'>
           <div className='flex-shrink-0 mr-4'>
             {user?.profileImage ? (
               <Image

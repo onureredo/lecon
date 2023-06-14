@@ -110,7 +110,7 @@ export const Timeline: React.FC = () => {
                         </span>
                       </h2>
                     </div>
-                    <div className='max-xs:w-72 overflow-auto'>
+                    <div className='max-sm:pr-24 overflow-auto'>
                       <p className='text-white mt-2'>{post.content}</p>
                     </div>
                     <div className='flex items-center mt-2 text-md space-x-6 sm:space-x-8'>

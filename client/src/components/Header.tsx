@@ -14,6 +14,7 @@ import {
 export const Header: React.FC = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const { user, logout } = useAuth();
+  const router = useRouter();
 
   const openLoginDialog = () => {
     setLoginOpen(true);
@@ -21,6 +22,7 @@ export const Header: React.FC = () => {
 
   const closeLoginDialog = () => {
     setLoginOpen(false);
+    router.push('/');
   };
 
   const handleLogout = () => {

@@ -15,12 +15,13 @@ export const Login: React.FC<LoginProps> = ({ handleClose }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [redirecting, setRedirecting] = useState(false);
-  const { login } = useAuth();
+  const { login, fetchUser } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(email, password);
+      fetchUser();
       setSuccess('Login successful!');
       setRedirecting(true);
       setTimeout(() => {

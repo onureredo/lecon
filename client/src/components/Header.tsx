@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@/context/AuthContext';
+import { Login } from './Login';
 import Image from 'next/image';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
@@ -9,12 +10,10 @@ import {
   faRightFromBracket,
   faRightToBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { Login } from './Login';
 
 export const Header: React.FC = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const { user, logout } = useAuth();
-  const router = useRouter();
 
   const openLoginDialog = () => {
     setLoginOpen(true);
@@ -22,7 +21,6 @@ export const Header: React.FC = () => {
 
   const closeLoginDialog = () => {
     setLoginOpen(false);
-    router.push('/');
   };
 
   const handleLogout = () => {

@@ -28,6 +28,30 @@ export function usePosts(user: User | null, isLoading: boolean) {
       });
   }, [user]);
 
+  const createPost = async (content: string) => {
+    try {
+      if (!user) {
+        throw new Error('User is not authenticated');
+      }
+      const response = await axios.post<Post>(
+        `${apiURL}/posts`,
+        {
+          author: user._id,
+          content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const newPost = response.data;
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
+    } catch (error) {
+      console.error((error as AxiosError).response); // Log the error response for debugging
+    }
+  };
+
   const likePost = async (postId: string) => {
     try {
       const response = await axios.post<Post>(
@@ -73,5 +97,13 @@ export function usePosts(user: User | null, isLoading: boolean) {
     );
   };
 
-  return { loading, error, posts, likePost, unlikePost, updatePost };
+  return {
+    loading,
+    error,
+    posts,
+    createPost,
+    likePost,
+    unlikePost,
+    updatePost,
+  };
 }

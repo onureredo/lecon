@@ -4,7 +4,6 @@ import { usePosts } from '@/hooks/usePosts';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatPostDate, formatTitleDate } from '@/utils/dateFormat';
-import { Post } from '@/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -14,6 +13,7 @@ import {
   faShareNodes,
   faChartSimple,
 } from '@fortawesome/free-solid-svg-icons';
+import { NewPost } from './NewPost';
 
 export const Timeline: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -40,6 +40,7 @@ export const Timeline: React.FC = () => {
   return (
     <div className='flex justify-center items-center'>
       <div className='sm:max-w-xl flex flex-col items-center overflow-hidden mb-20'>
+        <NewPost />
         <div className='max-w-full'>
           {[...posts].map((post) => {
             const formattedDate = post.createdAt

@@ -1,30 +1,34 @@
 import { useState, useEffect } from 'react';
-import { Post, APIError } from '@/types';
+import { Post, APIError, User } from '@/types';
 import Cookies from 'js-cookie';
 import { AxiosError } from 'axios';
 import axios from 'axios';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-export function usePosts() {
+export function usePosts(user: User | null, isLoading: boolean) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<APIError | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const token = Cookies.get('token');
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get<Post[]>(`${apiURL}/posts`)
-      .then((response) => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
+    if (!isLoading) {
+      setLoading(true);
+      axios
+        .get<Post[]>(`${apiURL}/posts`, {
+          headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+        })
+        .then((response) => {
+          setPosts(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error);
+          setLoading(false);
+        });
+    }
+  }, [user, isLoading]);
 
   const likePost = async (postId: string) => {
     try {
@@ -38,7 +42,6 @@ export function usePosts() {
         }
       );
       const likedPost = response.data;
-      console.log(likedPost);
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === postId ? likedPost : post))
       );
@@ -58,7 +61,6 @@ export function usePosts() {
         }
       );
       const unlikedPost = response.data;
-      console.log(unlikedPost);
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === postId ? unlikedPost : post))
       );

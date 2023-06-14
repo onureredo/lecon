@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthContext';
+import { useEffect } from 'react';
 import { usePosts } from '@/hooks/usePosts';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,7 @@ import {
 
 export const Timeline: React.FC = () => {
   const { user, isLoading } = useAuth();
-  const { posts, likePost, unlikePost, updatePost } = usePosts();
+  const { posts, likePost, unlikePost, updatePost } = usePosts(user, isLoading);
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
@@ -29,8 +30,6 @@ export const Timeline: React.FC = () => {
     }
   };
 
-  // console.log(posts.map((post) => post.createdAt));
-
   if (isLoading) {
     return (
       <div className='w-full min-h-screen flex items-center justify-center'>
@@ -40,7 +39,7 @@ export const Timeline: React.FC = () => {
   }
   return (
     <div className='flex justify-center items-center'>
-      <div className='sm:max-w-xl flex flex-col items-center overflow-hidden'>
+      <div className='sm:max-w-xl flex flex-col items-center overflow-hidden mb-20'>
         <div className='max-w-full'>
           {[...posts].map((post) => {
             const formattedDate = post.createdAt
@@ -55,25 +54,25 @@ export const Timeline: React.FC = () => {
                 key={post._id}
                 className='shadow w-full border border-gray-800'
               >
-                <div className='flex items-start m-6 cursor-default'>
+                <div className='flex items-start mx-4 my-5 cursor-default'>
                   <div className='flex-shrink-0 mr-4'>
                     {post.author && post.author.profileImage ? (
                       <Image
-                        className='h-12 w-12 object-cover rounded-full'
+                        className='h-16 w-16 object-cover rounded-full'
                         src={post.author.profileImage}
                         alt='User Avatar'
                         draggable={false}
-                        height={48}
-                        width={48}
+                        height={64}
+                        width={64}
                       />
                     ) : (
                       <Image
-                        className='h-12 w-12 object-cover rounded-full'
+                        className='h-16 w-16 object-cover rounded-full'
                         src='https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg='
                         alt='Default User Avatar'
                         draggable={false}
-                        width={48}
-                        height={48}
+                        width={64}
+                        height={64}
                       />
                     )}
                   </div>
@@ -166,7 +165,6 @@ export const Timeline: React.FC = () => {
                           title='Share'
                         />
                       </div>
-                      <div className='flex items-center cursor-pointer'></div>
                     </div>
                   </div>
                 </div>

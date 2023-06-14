@@ -1,6 +1,11 @@
 import { format } from 'date-fns';
 
 export function formatPostDate(date: string): string {
+  if (!date) {
+    console.error('Invalid date:', date);
+    return '';
+  }
+
   const postDate = new Date(date);
   const now = new Date();
   const diffInMinutes = Math.round(
@@ -20,12 +25,22 @@ export function formatPostDate(date: string): string {
 }
 
 export function formatTitleDate(date: string): string {
+  if (!date) {
+    console.error('Invalid date:', date);
+    return '';
+  }
+
   const postDate = new Date(date);
   const formattedTitleDate = format(postDate, 'hh:mm a · MMMM d yyyy');
   return formattedTitleDate;
 }
 
 export function formatSignupDate(date: string): string {
+  if (!date) {
+    console.error('Invalid date:', date);
+    return '';
+  }
+
   const signUpDate = new Date(date);
   const formatSignupDate = format(signUpDate, ' MMM yyyy');
   return formatSignupDate;

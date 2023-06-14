@@ -107,7 +107,13 @@ export const likePost = asyncHandler(async (req, res, next) => {
   user.likes.push(id);
   await user.save();
 
-  res.status(200).json({ success: `Liked post with id of ${id}` });
+  // Refetch the post after it's been updated
+  const updatedPost = await Post.findById(id).populate(
+    'author',
+    'username firstName lastName profileImage'
+  );
+
+  res.status(200).json(updatedPost);
 });
 
 export const unlikePost = asyncHandler(async (req, res, next) => {
@@ -135,5 +141,11 @@ export const unlikePost = asyncHandler(async (req, res, next) => {
   }
   await user.save();
 
-  res.status(200).json({ success: `Unliked post with id of ${id}` });
+  // Refetch the post after it's been updated
+  const updatedPost = await Post.findById(id).populate(
+    'author',
+    'username firstName lastName profileImage'
+  );
+
+  res.status(200).json(updatedPost);
 });

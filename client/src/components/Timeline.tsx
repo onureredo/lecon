@@ -3,6 +3,7 @@ import { usePosts } from '@/hooks/usePosts';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatPostDate, formatTitleDate } from '@/utils/dateFormat';
+import { Post } from '@/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -15,21 +16,20 @@ import {
 
 export const Timeline: React.FC = () => {
   const { user, isLoading } = useAuth();
-  const { posts, likePost, unlikePost } = usePosts();
+  const { posts, likePost, unlikePost, updatePost } = usePosts();
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
     if (post && user) {
-      // Added user null check here
       if (post.likes.includes(user._id)) {
-        // if the user has liked this post
         await unlikePost(postId);
       } else {
-        // if the user hasn't liked this post
         await likePost(postId);
       }
     }
   };
+
+  // console.log(posts.map((post) => post.createdAt));
 
   if (isLoading) {
     return (
@@ -41,10 +41,14 @@ export const Timeline: React.FC = () => {
   return (
     <div className='flex justify-center items-center'>
       <div className='sm:max-w-xl flex flex-col items-center overflow-hidden'>
-        <div className='max-w-full mb-20'>
+        <div className='max-w-full'>
           {[...posts].map((post) => {
-            const formattedDate = formatPostDate(post.createdAt);
-            const formattedTitleDate = formatTitleDate(post.createdAt);
+            const formattedDate = post.createdAt
+              ? formatPostDate(post.createdAt)
+              : '';
+            const formattedTitleDate = post.createdAt
+              ? formatTitleDate(post.createdAt)
+              : '';
 
             return (
               <div
@@ -76,7 +80,9 @@ export const Timeline: React.FC = () => {
                   <div className='flex flex-col flex-grow'>
                     <div className='flex items-center w-screen'>
                       <h2 className='font-bold text-gray-200 flex items-center text-lg max-sm:text-sm'>
-                        {post.author ? (
+                        {isLoading ? (
+                          <span>Loading...</span>
+                        ) : post.author ? (
                           <span>
                             {post.author.firstName}{' '}
                             {post.author.lastName.length > 8
@@ -118,7 +124,7 @@ export const Timeline: React.FC = () => {
                           title='Reply'
                         />
                         <span className='text-gray-400'>
-                          {post.comments.length}
+                          {post.comments?.length || 0}
                         </span>
                       </div>
                       <div className='flex items-center cursor-pointer'>
@@ -128,14 +134,14 @@ export const Timeline: React.FC = () => {
                           title='Retweet'
                         />
                         <span className='text-gray-400'>
-                          {post.reposts.length}
+                          {post.reposts?.length || 0}
                         </span>
                       </div>
                       <div className='flex items-center cursor-pointer'>
                         <FontAwesomeIcon
                           icon={faHeart}
                           className={`${
-                            user && post.likes.includes(user._id) // Added user null check here
+                            user && post.likes?.includes(user._id)
                               ? 'text-red-500'
                               : 'text-gray-400'
                           } mr-1 md:hover:text-red-500`}
@@ -143,7 +149,7 @@ export const Timeline: React.FC = () => {
                           onClick={() => handleToggleLike(post._id)}
                         />
                         <span className='text-gray-400'>
-                          {post.likes.length}
+                          {post.likes?.length || 0}
                         </span>
                       </div>
                       <div className='flex items-center cursor-pointer'>

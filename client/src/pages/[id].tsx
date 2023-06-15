@@ -1,17 +1,20 @@
-import { InfinitySpin } from 'react-loader-spinner';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LuVerified } from 'react-icons/lu';
 import { useAuth } from '@/context/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/router';
+import { usePosts } from '@/hooks/usePosts';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { useEffect, useState } from 'react';
+import { InfinitySpin } from 'react-loader-spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LuVerified } from 'react-icons/lu';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   formatSignupDate,
   formatPostDate,
   formatTitleDate,
 } from '@/utils/dateFormat';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import Image from 'next/image';
 import {
   faCalendarAlt,
   faChartSimple,
@@ -21,26 +24,16 @@ import {
   faRetweet,
   faShareNodes,
 } from '@fortawesome/free-solid-svg-icons';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { NewPost } from '@/components/NewPost';
-import Link from 'next/link';
-import { usePosts } from '@/hooks/usePosts';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 const ProfilePage = () => {
   const router = useRouter();
   const { user, isLoading } = useAuth();
   const id = router.query.id as string | undefined;
   const { posts, likePost, unlikePost } = usePosts(user, isLoading);
-  const {
-    profile,
-    loading,
-    follow,
-    unfollow,
-    isFollowing,
-    followersCount,
-    followingCount,
-  } = useProfile(id || '');
+  const { profile, loading, follow, unfollow, isFollowing } = useProfile(
+    id || ''
+  );
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
@@ -164,7 +157,9 @@ const ProfilePage = () => {
                 </p>
               </div>
               <div className='flex font-semibold'>
-                <p className='font-bold text-white'>{followingCount}</p>
+                <p className='font-bold text-white'>
+                  {profile?.followers.length}
+                </p>
                 <p className='ml-1 font-normal'>Following</p>
                 <p className='font-bold text-white ml-4'>
                   {profile?.followers.length}

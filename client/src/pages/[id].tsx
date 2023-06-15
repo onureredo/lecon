@@ -165,7 +165,7 @@ const ProfilePage = () => {
                 <p className='font-bold text-white ml-4'>
                   {profile?.followers.length}
                 </p>
-                <p className='ml-1 font-normal'>Followers</p>
+                <p className='ml-1 font-normal'>Followerrs</p>
               </div>
             </div>
           </div>

@@ -32,18 +32,23 @@ const ProfilePage = () => {
   const { user, isLoading } = useAuth();
   const id = router.query.id as string | undefined;
   const { posts, likePost, unlikePost } = usePosts(user, isLoading);
-  const [followStatus, setFollowStatus] = useState(false);
-  const { profile, loading, error, follow, unfollow, isFollowing } = useProfile(
-    id || ''
-  );
+  const {
+    profile,
+    loading,
+    error,
+    follow,
+    unfollow,
+    isFollowing,
+    setIsFollowing,
+  } = useProfile(id || '');
 
   useEffect(() => {
     if (user && profile && user.following.includes(profile._id)) {
-      setFollowStatus(true);
+      setIsFollowing(true);
     } else {
-      setFollowStatus(false);
+      setIsFollowing(false);
     }
-  }, [user, profile]);
+  }, [user, profile, setIsFollowing]);
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
@@ -58,10 +63,16 @@ const ProfilePage = () => {
 
   const handleToggleFollow = async () => {
     if (user && profile && profile._id) {
-      if (user.following.includes(profile._id)) {
-        await unfollow(profile._id);
-      } else {
-        await follow(profile._id);
+      try {
+        if (isFollowing) {
+          await unfollow(profile._id);
+          setIsFollowing(false);
+        } else {
+          await follow(profile._id);
+          setIsFollowing(true);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   };
@@ -140,7 +151,7 @@ const ProfilePage = () => {
             >
               {user && profile && user._id === profile._id
                 ? 'Edit Profile'
-                : followStatus
+                : isFollowing
                 ? 'Unfollow'
                 : 'Follow'}
             </button>

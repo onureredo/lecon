@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 import { User, Post, APIError } from '../types';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export function useProfile(username: string) {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<APIError | null>(null);
   const [profile, setProfile] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[] | null>(null);
-  const [isFollowing, setIsFollowing] = useState(false); // Add this line
+  const [isFollowing, setIsFollowing] = useState(false);
   const token = Cookies.get('token');
 
   useEffect(() => {
@@ -21,19 +23,16 @@ export function useProfile(username: string) {
         setProfile(response.data.user);
         setPosts(response.data.posts);
         setLoading(false);
+        // Check if current user is following the profile user
+        if (user && response.data.user.followers.includes(user._id)) {
+          setIsFollowing(true);
+        }
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }, [username]);
-
-  useEffect(() => {
-    const userId = Cookies.get('userId');
-    if (profile && userId) {
-      setIsFollowing(profile.followers.includes(userId.toString())); // convert userId to string
-    }
-  }, [profile]);
+  }, [username, user]);
 
   const follow = async (userId: string) => {
     try {
@@ -48,11 +47,7 @@ export function useProfile(username: string) {
       );
       // Check the response status code or success message
       if (response.status === 200) {
-        setProfile((prevProfile) =>
-          prevProfile
-            ? { ...prevProfile, following: [...prevProfile.following, userId] }
-            : null
-        );
+        setIsFollowing(true);
       }
     } catch (error) {
       console.error(error);
@@ -72,19 +67,21 @@ export function useProfile(username: string) {
       );
       // Check the response status code or success message
       if (response.status === 200) {
-        setProfile((prevProfile) =>
-          prevProfile
-            ? {
-                ...prevProfile,
-                following: prevProfile.following.filter((id) => id !== userId),
-              }
-            : null
-        );
+        setIsFollowing(false);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  return { loading, error, profile, posts, follow, unfollow, isFollowing };
+  return {
+    loading,
+    error,
+    profile,
+    posts,
+    follow,
+    unfollow,
+    isFollowing,
+    setIsFollowing,
+  };
 }

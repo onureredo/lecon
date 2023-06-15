@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@/context/AuthContext';
 import { Login } from './Login';
+import { Sidebar } from './Sidebar';
 import Image from 'next/image';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
-  faBars,
   faRightFromBracket,
   faRightToBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { Sidebar } from './Sidebar';
 
 export const Header: React.FC = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
@@ -33,7 +32,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className='sticky z-50 top-0 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-80 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
+      <header className='sticky z-50 top-0 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-50 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
         <div id='sidebar' className='h-full'>
           <button
             className='text-white focus:outline-none'

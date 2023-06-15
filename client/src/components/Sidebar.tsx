@@ -1,5 +1,4 @@
 import { useAuth } from '@/context/AuthContext';
-import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MdVerified } from 'react-icons/md';
 import { BsMoonStars } from 'react-icons/bs';

@@ -12,8 +12,6 @@ import {
   faBookmark,
   faUser,
   faGear,
-  faCircleArrowLeft,
-  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 type SidebarProps = {

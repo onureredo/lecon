@@ -51,9 +51,16 @@ export const followUser = asyncHandler(async (req, res, next) => {
   await userToFollow.save();
   await currentUser.save();
 
+  const updatedUserToFollow = await User.findById(req.params.id).select(
+    '-password -email'
+  );
+
   res
     .status(200)
-    .json({ success: `Followed user with id of ${req.params.id}` });
+    .json({
+      success: `Followed user with id of ${req.params.id}`,
+      user: updatedUserToFollow,
+    });
 });
 
 export const unfollowUser = asyncHandler(async (req, res, next) => {
@@ -78,7 +85,14 @@ export const unfollowUser = asyncHandler(async (req, res, next) => {
   await userToUnfollow.save();
   await currentUser.save();
 
+  const updatedUserToUnfollow = await User.findById(req.params.id).select(
+    '-password -email'
+  );
+
   res
     .status(200)
-    .json({ success: `Unfollowed user with id of ${req.params.id}` });
+    .json({
+      success: `Unfollowed user with id of ${req.params.id}`,
+      user: updatedUserToUnfollow,
+    });
 });

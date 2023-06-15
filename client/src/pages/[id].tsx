@@ -32,9 +32,15 @@ const ProfilePage = () => {
   const { user, isLoading } = useAuth();
   const id = router.query.id as string | undefined;
   const { posts, likePost, unlikePost } = usePosts(user, isLoading);
-  const { profile, loading, follow, unfollow, isFollowing } = useProfile(
-    id || ''
-  );
+  const {
+    profile,
+    loading,
+    follow,
+    unfollow,
+    isFollowing,
+    followersCount,
+    followingCount,
+  } = useProfile(id || '');
 
   const handleToggleLike = async (postId: string) => {
     const post = posts.find((post) => post._id === postId);
@@ -158,13 +164,9 @@ const ProfilePage = () => {
                 </p>
               </div>
               <div className='flex font-semibold'>
-                <p className='font-bold text-white'>
-                  {profile?.following.length}
-                </p>
+                <p className='font-bold text-white'>{followingCount}</p>
                 <p className='ml-1 font-normal'>Following</p>
-                <p className='font-bold text-white ml-4'>
-                  {profile?.followers.length}
-                </p>
+                <p className='font-bold text-white ml-4'>{followersCount}</p>
                 <p className='ml-1 font-normal'>Followers</p>
               </div>
             </div>

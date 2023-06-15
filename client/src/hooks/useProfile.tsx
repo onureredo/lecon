@@ -8,36 +8,49 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export function useProfile(username: string) {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<APIError | null>(null);
-  const [profile, setProfile] = useState<User | null>(null);
-  const [posts, setPosts] = useState<Post[] | null>(null);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [state, setState] = useState<{
+    loading: boolean;
+    error: APIError | null;
+    profile: User | null;
+    posts: Post[] | null;
+    isFollowing: boolean;
+    followersCount: number;
+    followingCount: number;
+  }>({
+    loading: true,
+    error: null,
+    profile: null,
+    posts: null,
+    isFollowing: false,
+    followersCount: 0,
+    followingCount: 0,
+  });
   const token = Cookies.get('token');
 
   useEffect(() => {
-    setLoading(true);
+    setState((prev) => ({ ...prev, loading: true }));
     axios
       .get(`${apiURL}/users/${username}`)
       .then((response) => {
-        setProfile(response.data.user);
-        setPosts(response.data.posts);
-        setLoading(false);
-        // Check if current user is following the profile user
-        if (user && response.data.user.followers.includes(user._id)) {
-          setIsFollowing(true);
-        }
+        setState({
+          loading: false,
+          error: null,
+          profile: response.data.user,
+          posts: response.data.posts,
+          isFollowing: user && response.data.user.followers.includes(user._id),
+          followersCount: response.data.user.followers.length,
+          followingCount: response.data.user.following.length,
+        });
       })
       .catch((error) => {
-        setError(error);
-        setLoading(false);
+        setState((prev) => ({ ...prev, loading: false, error }));
       });
   }, [username, user]);
 
   const follow = async () => {
     try {
       const response = await axios.put(
-        `${apiURL}/users/${profile?._id}/follow`,
+        `${apiURL}/users/${state.profile?._id}/follow`,
         {},
         {
           headers: {
@@ -46,7 +59,7 @@ export function useProfile(username: string) {
         }
       );
       if (response.status === 200) {
-        setIsFollowing(true);
+        setState((prev) => ({ ...prev, isFollowing: true }));
       } else {
         console.log('Failed to follow user');
       }
@@ -58,7 +71,7 @@ export function useProfile(username: string) {
   const unfollow = async () => {
     try {
       const response = await axios.put(
-        `${apiURL}/users/${profile?._id}/unfollow`,
+        `${apiURL}/users/${state.profile?._id}/unfollow`,
         {},
         {
           headers: {
@@ -67,7 +80,7 @@ export function useProfile(username: string) {
         }
       );
       if (response.status === 200) {
-        setIsFollowing(false);
+        setState((prev) => ({ ...prev, isFollowing: false }));
       } else {
         console.log('Failed to unfollow user');
       }
@@ -77,12 +90,8 @@ export function useProfile(username: string) {
   };
 
   return {
-    loading,
-    error,
-    profile,
-    posts,
+    ...state,
     follow,
     unfollow,
-    isFollowing,
   };
 }

@@ -34,10 +34,10 @@ export function useProfile(username: string) {
       });
   }, [username, user]);
 
-  const follow = async (userId: string) => {
+  const follow = async () => {
     try {
       const response = await axios.put(
-        `${apiURL}/users/${userId}/follow`,
+        `${apiURL}/users/${profile?._id}/follow`,
         {},
         {
           headers: {
@@ -45,19 +45,20 @@ export function useProfile(username: string) {
           },
         }
       );
-      // Check the response status code or success message
       if (response.status === 200) {
         setIsFollowing(true);
+      } else {
+        console.log('Failed to follow user');
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const unfollow = async (userId: string) => {
+  const unfollow = async () => {
     try {
       const response = await axios.put(
-        `${apiURL}/users/${userId}/unfollow`,
+        `${apiURL}/users/${profile?._id}/unfollow`,
         {},
         {
           headers: {
@@ -65,9 +66,10 @@ export function useProfile(username: string) {
           },
         }
       );
-      // Check the response status code or success message
       if (response.status === 200) {
         setIsFollowing(false);
+      } else {
+        console.log('Failed to unfollow user');
       }
     } catch (error) {
       console.error(error);
@@ -82,6 +84,5 @@ export function useProfile(username: string) {
     follow,
     unfollow,
     isFollowing,
-    setIsFollowing,
   };
 }

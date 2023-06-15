@@ -2,6 +2,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MdVerified } from 'react-icons/md';
+import { BsMoonStars } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -12,6 +13,7 @@ import {
   faUser,
   faGear,
   faCircleArrowLeft,
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 type SidebarProps = {
@@ -32,30 +34,40 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <nav
-        className={`h-screen w-64 pt-4 pl-4 flex flex-col text-white fixed bg-rouge border-r-2 border-r-night-shade overflow-auto transform ${sidebarClass}`}
+        className={`h-screen w-64 pt-4 pl-4 flex flex-col text-white fixed bg-rouge border-r-2 border-r-gray-500 overflow-auto transform ${sidebarClass}`}
       >
         <ul className='space-y-8 flex flex-col '>
           <div>
             <li>
               <div id='user' className=''>
                 {user && user.profileImage ? (
-                  <Image
-                    className='object-cover rounded-full'
-                    src={user.profileImage}
-                    alt='User Avatar'
-                    draggable={false}
-                    height={36}
-                    width={36}
-                  />
+                  <button
+                    className='flex items-center'
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Image
+                      className='object-cover rounded-full'
+                      src={user.profileImage}
+                      alt='User Avatar'
+                      draggable={false}
+                      height={36}
+                      width={36}
+                    />
+                  </button>
                 ) : (
-                  <Image
-                    className='object-cover rounded-full'
-                    src='https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg='
-                    alt='Default User Avatar'
-                    draggable={false}
-                    width={36}
-                    height={36}
-                  />
+                  <button
+                    className='flex items-center'
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Image
+                      className='object-cover rounded-full'
+                      src='https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg='
+                      alt='Default User Avatar'
+                      draggable={false}
+                      width={36}
+                      height={36}
+                    />
+                  </button>
                 )}
                 {user && (
                   <>
@@ -115,7 +127,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </Link>
             <p className='text-lg font-bold ml-2'>Settings</p>
           </li>
-          <li>
+          <div className='mt-24'>
+            <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
+              <Link href='/settings'>
+                <BsMoonStars size='24px' />
+              </Link>
+              <p className='text-lg font-bold ml-2'>Dark Mode</p>
+            </li>
+          </div>
+          {/* <li>
             <button
               className='flex items-center'
               onClick={() => setSidebarOpen(false)}
@@ -123,7 +143,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <FontAwesomeIcon icon={faCircleArrowLeft} size='xl' />
               <p className='text-lg font-bold ml-2'>Close Sidebar</p>
             </button>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </>

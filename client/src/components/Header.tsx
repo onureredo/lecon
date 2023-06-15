@@ -10,9 +10,11 @@ import {
   faRightFromBracket,
   faRightToBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { Sidebar } from './Sidebar';
 
 export const Header: React.FC = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter();
 
@@ -32,13 +34,32 @@ export const Header: React.FC = () => {
   return (
     <>
       <header className='sticky z-50 top-0 flex justify-between items-center py-2 px-6 bg-rouge backdrop-blur-sm bg-opacity-80 text-white border-b-4 border-night-shade sm:hidden xxs:w-full'>
-        <div id='sidebar'>
+        <div id='sidebar' className='h-full'>
           <button
-            className='text-white focus:online-none'
-            // onClick={handleToggleSidebar}
+            className='text-white focus:outline-none'
+            onClick={() => setSidebarOpen(!isSidebarOpen)}
           >
-            <FontAwesomeIcon icon={faBars} size='lg' />
+            {user && user.profileImage ? (
+              <Image
+                className='object-cover rounded-full'
+                src={user.profileImage}
+                alt='User Avatar'
+                draggable={false}
+                height={36}
+                width={36}
+              />
+            ) : null}
           </button>
+        </div>
+        <div
+          className={`fixed top-0 bottom-0 left-0 bg-rouge text-white w-16 sm:w-64 transform-gpu transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <Sidebar
+            isSidebarOpen={isSidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
         </div>
         <div id='lecon-logo'>
           <Image
@@ -53,11 +74,11 @@ export const Header: React.FC = () => {
         <div id='login-logout'>
           {user ? (
             <button onClick={handleLogout}>
-              <FontAwesomeIcon icon={faRightFromBracket} size='lg' />
+              <FontAwesomeIcon icon={faRightFromBracket} size='xl' />
             </button>
           ) : (
             <button className='rounded-full' onClick={openLoginDialog}>
-              <FontAwesomeIcon icon={faRightToBracket} size='lg' />
+              <FontAwesomeIcon icon={faRightToBracket} size='xl' />
             </button>
           )}
           {isLoginOpen && (

@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div>
             <li>
               <div id='user' className=''>
-                {user && user.profileImage ? (
+                {user && user?.profileImage ? (
                   <button
                     className='flex items-center'
                     onClick={() => setSidebarOpen(false)}
@@ -72,14 +72,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <p className='text-md font-semibold mt-2'>
                       {user.firstName} {user.lastName}
                     </p>
-                    <p className='text-sm text-gray-500'>@{user.username}</p>
+                    <p className='text-sm text-gray-500'>@{user?.username}</p>
                     <div className='flex mt-1 '>
                       <p className='text-md font-bold'>
-                        {user.following.length}
+                        {user.following?.length}
                       </p>
                       <p className='text-md ml-1'>Following</p>
                       <p className='text-md font-bold ml-1'>
-                        {user.followers.length}
+                        {user.followers?.length}
                       </p>
                       <p className='text-md ml-1 '>Followers</p>
                     </div>

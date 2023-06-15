@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
             setSidebarOpen={setSidebarOpen}
           />
         </div>
-        <div id='lecon-logo'>
+        <div id='lecon-logo' className=''>
           <Image
             className='object-fit'
             src={'https://i.ibb.co/BZbw1Q7/lecon.png'}

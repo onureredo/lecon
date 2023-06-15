@@ -4,6 +4,7 @@ import { usePosts } from '@/hooks/usePosts';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatPostDate, formatTitleDate } from '@/utils/dateFormat';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import {

@@ -13,6 +13,7 @@ export function useProfile(username: string) {
   const [profile, setProfile] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[] | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
   const token = Cookies.get('token');
 
   useEffect(() => {
@@ -22,10 +23,13 @@ export function useProfile(username: string) {
       .then((response) => {
         setProfile(response.data.user);
         setPosts(response.data.posts);
+        setFollowersCount(response.data.user.followers.length);
         setLoading(false);
         // Check if current user is following the profile user
         if (user && response.data.user.followers.includes(user._id)) {
           setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
         }
       })
       .catch((error) => {
@@ -47,6 +51,7 @@ export function useProfile(username: string) {
       );
       if (response.status === 200) {
         setIsFollowing(true);
+        setFollowersCount((prevCount) => prevCount + 1);
       } else {
         console.log('Failed to follow user');
       }
@@ -68,6 +73,7 @@ export function useProfile(username: string) {
       );
       if (response.status === 200) {
         setIsFollowing(false);
+        setFollowersCount((prevCount) => prevCount - 1);
       } else {
         console.log('Failed to unfollow user');
       }
@@ -84,5 +90,6 @@ export function useProfile(username: string) {
     follow,
     unfollow,
     isFollowing,
+    followersCount,
   };
 }

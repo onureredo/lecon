@@ -11,12 +11,14 @@ export interface User {
   location: string;
   profileImage: string;
   bgImage: string;
+  likes: string;
   following: Array<string>;
   followers: Array<string>;
   theme: 'light' | 'dark';
   isVerified: boolean;
   createdAt: string;
   updatedAt: string;
+  posts: any[];
 }
 export interface Post {
   _id: string;

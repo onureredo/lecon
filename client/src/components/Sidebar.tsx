@@ -88,45 +88,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
             </li>
           </div>
-          <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-            <Link href='/'>
+          <Link href={`/${user?.username}`}>
+            <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
               <FontAwesomeIcon icon={faUser} size='xl' />
-            </Link>
-            <p className='text-lg font-bold ml-2'>Profil</p>
-          </li>
+              <p className='text-lg font-bold ml-2'>Profil</p>
+            </li>
+          </Link>
           <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors text-night-shadz hover:cursor-pointer'>
-            <Link href='/explore'>
+            <Link href='/'>
               <MdVerified size='24px' />
             </Link>
             <p className='text-lg font-bold ml-2 text-white'>Lecon Red</p>
           </li>
           <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-            <Link href='/explore'>
+            <Link href='/'>
               <FontAwesomeIcon icon={faHashtag} size='xl' />
             </Link>
             <p className='text-lg font-bold ml-2'>Explore</p>
           </li>
           <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-            <Link href='/lists'>
+            <Link href='/'>
               <FontAwesomeIcon icon={faList} size='xl' />
             </Link>
             <p className='text-lg font-bold ml-2'>Lists</p>
           </li>
           <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-            <Link href='/bookmarks'>
+            <Link href='/'>
               <FontAwesomeIcon icon={faBookmark} size='xl' />
             </Link>
             <p className='text-lg font-bold ml-2'>Bookmarks</p>
           </li>
           <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-            <Link href='/settings'>
+            <Link href='/'>
               <FontAwesomeIcon icon={faGear} size='xl' />
             </Link>
             <p className='text-lg font-bold ml-2'>Settings</p>
           </li>
           <div className='mt-24'>
             <li className='flex items-center text-sm font-semibold hover:opacity-60 transition-colors'>
-              <Link href='/settings'>
+              <Link href='/'>
                 <BsMoonStars size='24px' />
               </Link>
               <p className='text-lg font-bold ml-2'>Dark Mode</p>

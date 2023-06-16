@@ -45,5 +45,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-transitions')(),
+    require('tailwindcss-transforms')(),
+  ],
 };

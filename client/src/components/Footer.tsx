@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
       <footer>
         <div
           id='mobile-button'
-          className='fixed bottom-0 left-0 right-0 bg-rouge bg-opacity-50 backdrop-blur-sm sm:hidden text-white border-t-2 rounded-t-md border-night-shade'
+          className='fixed bottom-0 left-0 right-0 bg-rouge bg-opacity-70 backdrop-blur-sm sm:hidden text-white border-t-2 rounded-t-md border-night-shade'
         >
           <ul className='flex justify-around items-center py-4 mb-6 sm:hidden text-white border-t-2 rounded-t-md border-night-shade'>
             <li className='sm:hidden'>

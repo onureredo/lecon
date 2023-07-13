@@ -30,13 +30,13 @@ export function usePosts(user: User | null, isLoading: boolean) {
     };
 
     fetchPosts();
-    // const intervalId = user
-    //   ? setInterval(fetchPosts, 1000)
-    //   : setInterval(fetchPosts, 60000);
+    const intervalId = user
+      ? setInterval(fetchPosts, 1000)
+      : setInterval(fetchPosts, 50000);
 
-    // return () => {
-    //   clearInterval(intervalId);
-    // };
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [user]);
 
   const createPost = async (content: string) => {
